@@ -1,5 +1,6 @@
 package com.example.springboot.Order.contollers;
 
+import com.example.springboot.Order.dtos.OrderAdminDto;
 import com.example.springboot.Order.dtos.OrderDTO;
 import com.example.springboot.Order.services.OrderService;
 import com.example.springboot.User.dto.UserDTO;
@@ -63,13 +64,14 @@ public class OrderController {
     @PreAuthorize("hasAnyRole('admin')")
     @GetMapping
     @ResponseBody
-    public Page<OrderDTO> get(
+    public Page<OrderAdminDto> get(
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "10") int size,
-            @RequestParam(defaultValue = "id") String sortBy
+            @RequestParam(defaultValue = "id") String sortBy,
+            @RequestParam(defaultValue = "ASC") Sort.Direction sortDirection
     ) {
         // request to the database using pagination
-        Pageable pageable = PageRequest.of(page, size, Sort.by(sortBy));
+        Pageable pageable = PageRequest.of(page, size, Sort.by( sortDirection, sortBy));
         return orderService.findAllPageable(pageable);
     }
 

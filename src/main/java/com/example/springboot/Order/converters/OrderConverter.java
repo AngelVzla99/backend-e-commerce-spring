@@ -1,5 +1,6 @@
 package com.example.springboot.Order.converters;
 
+import com.example.springboot.Order.dtos.OrderAdminDto;
 import com.example.springboot.Order.dtos.OrderDTO;
 import com.example.springboot.Order.entities.OrderEntity;
 import com.example.springboot.User.entities.AddressEntity;
@@ -34,6 +35,18 @@ public class OrderConverter {
         // deep conversion
         dto.setOrderItems(orderItemConverter.toDtoList(orderEntity.getOrderItems()));
         dto.setPaymentMethods(paymentMethodConverter.toDtoList(orderEntity.getPaymentMethods()));
+        return dto;
+    }
+
+    public OrderAdminDto toAdminDto(OrderEntity orderEntity) {
+        OrderAdminDto dto = modelMapper.map(orderEntity, OrderAdminDto.class);
+        // deep conversion
+        dto.setOrderItems(orderItemConverter.toAdminDtoList(orderEntity.getOrderItems()));
+        dto.setPaymentMethods(paymentMethodConverter.toDtoList(orderEntity.getPaymentMethods()));
+
+        System.out.println("dto: " + dto);
+        System.out.println("dto.getOrderItems(): " + dto.getOrderItems());
+
         return dto;
     }
 

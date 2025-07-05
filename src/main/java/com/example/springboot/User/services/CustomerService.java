@@ -31,7 +31,7 @@ public class CustomerService {
     OrderConverter orderConverter;
 
     public UserDTO create(UserDTO dto){
-        return userService.saveCustomer(dto);
+        return userService.createCustomer(dto);
     }
 
     public UserDTO findMe(String email){

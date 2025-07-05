@@ -1,5 +1,6 @@
 package com.example.springboot.exceptions;
 
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageConversionException;
@@ -63,7 +64,7 @@ public class ExceptionControllerAdvice {
             String errorMessage = error.getDefaultMessage();
             errors.put(fieldName, errorMessage);
         });
-        ErrorResponse errorResponse = new MyErrorResponse(errors.toString(), HttpStatus.BAD_REQUEST);
+        ErrorResponse errorResponse = new MyErrorResponse("DTO validation error", HttpStatus.BAD_REQUEST,errors);
         return new ResponseEntity<>(errorResponse, HttpStatus.BAD_REQUEST);
     }
 

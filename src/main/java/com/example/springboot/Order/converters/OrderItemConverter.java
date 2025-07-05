@@ -1,5 +1,6 @@
 package com.example.springboot.Order.converters;
 
+import com.example.springboot.Order.dtos.OrderItemAdminDto;
 import com.example.springboot.Order.dtos.OrderItemDTO;
 import com.example.springboot.Order.entities.OrderItemEntity;
 import com.example.springboot.Order.entities.OrderEntity;
@@ -27,6 +28,11 @@ public class OrderItemConverter {
         return modelMapper.map(orderItemEntity, OrderItemDTO.class);
     }
 
+    public OrderItemAdminDto toAdminDto(OrderItemEntity orderItemEntity) {
+        OrderItemAdminDto dto = modelMapper.map(orderItemEntity, OrderItemAdminDto.class);
+        return dto;
+    }
+
     public OrderItemEntity toEntity(OrderItemDTO orderItemDTO, OrderEntity orderEntity) {
         OrderItemEntity entity = new OrderItemEntity();
         // relations
@@ -46,5 +52,9 @@ public class OrderItemConverter {
 
     public List<OrderItemDTO> toDtoList(List<OrderItemEntity> DTOs){
         return DTOs.stream().map(this::toDto).toList();
+    }
+
+    public List<OrderItemAdminDto> toAdminDtoList(List<OrderItemEntity> DTOs){
+        return DTOs.stream().map(this::toAdminDto).toList();
     }
 }

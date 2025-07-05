@@ -11,13 +11,14 @@ import com.example.springboot.User.converter.CartItemConverter;
 import com.example.springboot.User.repositories.UserEntityRepository;
 import com.example.springboot.security.TokenUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import java.util.*;
 
@@ -48,7 +49,7 @@ public class UserService {
         else throw new ResponseStatusException(HttpStatus.NOT_FOUND, "This user is not in the database");
     }
 
-    public UserDTO save(UserDTO dto) {
+    public UserDTO create(UserDTO dto) {
         // Search each role in the database
         Set<RoleEntity> roles = new HashSet<>();
         for (Long id : dto.getRoles()) {
@@ -84,6 +85,26 @@ public class UserService {
             user.setResetPasswordToken(newResetPasswordToken);
         }
 
+        String firstName = dto.getFirstName();
+        if(firstName!=null && !firstName.isEmpty()){
+            user.setFirstName(firstName);
+        }
+
+        String lastName = dto.getLastName();
+        if(lastName!=null && !lastName.isEmpty()){
+            user.setLastName(lastName);
+        }
+
+        String phoneNumber = dto.getPhoneNumber();
+        if(phoneNumber!=null && !phoneNumber.isEmpty()){
+            user.setPhoneNumber(phoneNumber);
+        }
+
+        String email = dto.getEmail();
+        if(email!=null && !email.isEmpty()){
+            user.setEmail(email);
+        }
+
         UserEntity newEntity = userEntityRepository.save(user);
         return userConverter.toDTO(newEntity);
     }
@@ -92,6 +113,7 @@ public class UserService {
         Optional<UserEntity> user = userEntityRepository.findOneByEmail(email);
         return user.isPresent();
     }
+
     public UserDTO findByEmail(String email){
         Optional<UserEntity> user = userEntityRepository.findOneByEmail(email);
         if (user.isPresent()) return userConverter.toDTO(user.get());
@@ -117,7 +139,11 @@ public class UserService {
         return userConverter.toDTO( userEntityRepository.save(userEntity) );
     }
 
-    public UserDTO saveCustomer(UserDTO user){
+    public UserDTO createCustomer(UserDTO user){
+        if(this.isEmailInDataBase(user.getEmail())){
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "The email already exist");
+        }
+
         // Search each role in the database
         RoleEntity role = roleService.findByRoleNameOrCreate("customer");
         Set<RoleEntity> roleEntities = new HashSet<>();
@@ -172,6 +198,14 @@ public class UserService {
             authorities.add(new SimpleGrantedAuthority("ROLE_" + role.getRoleName()));
         });
         return TokenUtils.createTokenUser(email,authorities);
+    }
+
+    public Page<UserDTO> findAllPageable(Pageable pageable) {
+        Page<UserEntity> responsePage = userEntityRepository.findAll(pageable);
+        if (!responsePage.hasContent())
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND);
+
+        return responsePage.map(userConverter::toDTO);
     }
 
     // =============================

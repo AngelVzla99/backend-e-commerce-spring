@@ -17,6 +17,7 @@ public class ProductDTO {
     private Long id;
     private Long discountId;
     @NotNull(message = "name is required")
+    @Size(min = 2, message = "the name should have at least 2 characters")
     private String name;
     @DecimalMin(value = "0", message = "price must be greater than or equal to 0")
     private Long price;
@@ -25,19 +26,21 @@ public class ProductDTO {
     private Integer taxPercentage;
     @NotNull(message = "quantity is required")
     @DecimalMin(value = "0", message = "quantity must be 0")
-    @DecimalMax(value = "0", message = "quantity must be 0")
     private Long quantity = 0L;
     @NotNull(message = "description is required")
     private String description;
+    @Size(max = 100, message = "photoUrlSmall must be at most 100 characters")
     private String photoUrlSmall;
+    @Size(max = 100, message = "photoUrlMedium must be at most 100 characters")
     private String photoUrlMedium;
+    @Size(max = 100, message = "photoUrlBig must be at most 100 characters")
     private String photoUrlBig;
     private String amount;
     private BigDecimal weight;
     private BigDecimal height;
     private String brand;
     @NotNull(message = "categories is required")
-    @Size(min = 1, message = "at least one category is required")
+//    @Size(min = 1, message = "at least one category is required")
     private List<Long> categories;
 
     public ProductDTO() {}
@@ -52,120 +55,6 @@ public class ProductDTO {
     @Override
     public int hashCode() {
         return Objects.hash(getId(), getDiscountId(), getName(), getPrice(), getTaxPercentage(), getQuantity(), getDescription(), getPhotoUrlSmall(), getPhotoUrlMedium(), getPhotoUrlBig(), getAmount(), getWeight(), getHeight(), getCategories());
-    }
-
-    // GETTERS AND SETTERS
-
-    public List<Long> getCategories() {
-        return categories;
-    }
-
-    public void setCategories(List<Long> categories) {
-        this.categories = categories;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public Long getDiscountId() {
-        return discountId;
-    }
-
-    public void setDiscountId(Long discountId) {
-        this.discountId = discountId;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public Long getPrice() {
-        return price;
-    }
-
-    public void setPrice(Long price) {
-        this.price = price;
-    }
-
-    public Integer getTaxPercentage() {
-        return taxPercentage;
-    }
-
-    public void setTaxPercentage(Integer taxPercentage) {
-        this.taxPercentage = taxPercentage;
-    }
-
-    public Long getQuantity() {
-        return quantity;
-    }
-
-    public void setQuantity(Long quantity) {
-        this.quantity = quantity;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public String getPhotoUrlSmall() {
-        return photoUrlSmall;
-    }
-
-    public void setPhotoUrlSmall(String photoUrlSmall) {
-        this.photoUrlSmall = photoUrlSmall;
-    }
-
-    public String getPhotoUrlMedium() {
-        return photoUrlMedium;
-    }
-
-    public void setPhotoUrlMedium(String photoUrlMedium) {
-        this.photoUrlMedium = photoUrlMedium;
-    }
-
-    public String getPhotoUrlBig() {
-        return photoUrlBig;
-    }
-
-    public void setPhotoUrlBig(String photoUrlBig) {
-        this.photoUrlBig = photoUrlBig;
-    }
-
-    public String getAmount() {
-        return amount;
-    }
-
-    public void setAmount(String amount) {
-        this.amount = amount;
-    }
-
-    public BigDecimal getWeight() {
-        return weight;
-    }
-
-    public void setWeight(BigDecimal weight) {
-        this.weight = weight;
-    }
-
-    public BigDecimal getHeight() {
-        return height;
-    }
-
-    public void setHeight(BigDecimal height) {
-        this.height = height;
     }
 
     // toString() method

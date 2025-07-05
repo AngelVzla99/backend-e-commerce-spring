@@ -1,6 +1,7 @@
 package com.example.springboot.Order.services;
 
 
+import com.example.springboot.Order.dtos.OrderAdminDto;
 import com.example.springboot.Order.dtos.PaymentMethodDTO;
 import com.example.springboot.Order.converters.OrderConverter;
 import com.example.springboot.Order.dtos.OrderDTO;
@@ -28,8 +29,8 @@ public class OrderService {
     @Autowired
     private OrderConverter orderConverter;
 
-    public Page<OrderDTO> findAllPageable(Pageable pageable) {
-        return orderRepository.findAll(pageable).map(orderConverter::toDto);
+    public Page<OrderAdminDto> findAllPageable(Pageable pageable) {
+        return orderRepository.findAll(pageable).map(orderConverter::toAdminDto);
     }
 
     public OrderDTO findById(Long id) {

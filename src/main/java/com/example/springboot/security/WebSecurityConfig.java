@@ -45,11 +45,10 @@ public class WebSecurityConfig {
                 .authorizeHttpRequests()
                 // public endpoints
                 .requestMatchers(
-                        "/api/user/customer",
+                        "/api/user/customer", //  this makes public all the endpoints under /cus ?
                         "/api/products/search-by-text/**",
                         "/api/products/most-popular",
                         "/api/products/best-sales",
-                        "/api/home/**",
                         "/docs/swagger-ui/**",
                         "/v3/api-docs/**",
                         "/health",

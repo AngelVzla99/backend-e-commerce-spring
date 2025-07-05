@@ -3,6 +3,7 @@ package com.example.springboot.Product.controllers;
 import com.example.springboot.Product.converters.ProductConverter;
 import com.example.springboot.Product.dtos.ProductDTO;
 import com.example.springboot.Product.services.ProductService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -72,10 +73,11 @@ public class ProductController {
     public Page<ProductDTO> getAll(
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "10") int size,
-            @RequestParam(defaultValue = "id") String sortBy
+            @RequestParam(defaultValue = "id") String sortBy,
+            @RequestParam(defaultValue = "ASC") Sort.Direction sortDirection
     ) {
         // request to the database using pagination
-        Pageable pageable = PageRequest.of(page, size, Sort.by(sortBy));
+        Pageable pageable = PageRequest.of(page, size, Sort.by( sortDirection, sortBy));
         return productService.findAllPageable(pageable);
     }
 
@@ -90,9 +92,8 @@ public class ProductController {
 
     @PreAuthorize("hasAnyRole('admin')")
     @PostMapping("/create")
-    public ResponseEntity<ProductDTO> create(@RequestBody ProductDTO productDTO) {
+    public ResponseEntity<ProductDTO> create(@Valid @RequestBody ProductDTO productDTO) {
         return new ResponseEntity<>(productService.save(productDTO),HttpStatus.CREATED);
-
     }
 
     // ================
