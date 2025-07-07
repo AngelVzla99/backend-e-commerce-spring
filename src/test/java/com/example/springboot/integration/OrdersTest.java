@@ -1,8 +1,13 @@
 package com.example.springboot.integration;
 
 
-import com.example.springboot.dto.*;
-import com.example.springboot.pojo.Login;
+import com.example.springboot.Order.dtos.OrderDTO;
+import com.example.springboot.Order.dtos.OrderItemDTO;
+import com.example.springboot.Order.dtos.PaymentMethodDTO;
+import com.example.springboot.Product.dtos.ProductDTO;
+import com.example.springboot.User.dto.AddressDTO;
+import com.example.springboot.User.dto.UserDTO;
+import com.example.springboot.Auth.Login;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.gson.Gson;
 import org.junit.Before;

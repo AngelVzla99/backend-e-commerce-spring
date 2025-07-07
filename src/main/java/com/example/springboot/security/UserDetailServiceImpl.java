@@ -1,8 +1,7 @@
 package com.example.springboot.security;
 
-import com.example.springboot.model.UserEntity;
-import com.example.springboot.repository.UserEntityRepository;
-import org.hibernate.Hibernate;
+import com.example.springboot.User.entities.UserEntity;
+import com.example.springboot.User.repositories.UserEntityRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.User;

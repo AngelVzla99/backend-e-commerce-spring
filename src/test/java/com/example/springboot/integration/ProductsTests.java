@@ -1,7 +1,7 @@
 package com.example.springboot.integration;
 
-import com.example.springboot.dto.ProductDTO;
-import com.example.springboot.pojo.Login;
+import com.example.springboot.Product.dtos.ProductDTO;
+import com.example.springboot.Auth.Login;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.gson.Gson;
 import org.junit.Before;

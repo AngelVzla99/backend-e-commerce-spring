@@ -59,6 +59,8 @@ The data will be saved in a volume folder db-data
 
 # TODO
 
+* Install library for mappers
+* Install library for partial updates
 * Save user image 
 * Save User genre 
 * More test cases
